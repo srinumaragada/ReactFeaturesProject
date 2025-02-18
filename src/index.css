@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.recharts-line {
+    opacity: 1 !important;  /* Ensure lines are not hidden */
+    stroke-width: 3px;      /* Make sure lines are thick enough to be visible */
+  }
+  

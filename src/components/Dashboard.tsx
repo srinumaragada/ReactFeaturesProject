@@ -5,25 +5,26 @@ import { useCounterStore } from '../store/counterStore';
 export const Dashboard: React.FC = () => {
   const { count } = useCounterStore();
   const [data, setData] = useState<{ name: string; increase: number; decrease: number }[]>([]);
-  const [userData, setUserData] = useState<{ name: string; email: string } | null>(null); // State for user data
+  const [userData, setUserData] = useState<{ name: string; email: string } | null>(null);
 
- 
+  // Load user data from localStorage
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData)); 
+      setUserData(JSON.parse(storedUserData));
     }
   }, []);
 
- 
+  // Save user data to localStorage
   useEffect(() => {
     if (userData) {
-      localStorage.setItem('userData', JSON.stringify(userData)); // Save user data to localStorage
+      localStorage.setItem('userData', JSON.stringify(userData));
     }
   }, [userData]);
 
-  
+  // Update chart data based on count
   useEffect(() => {
+    console.log("Current Count: ", count);  // Log the count value
     const currentDate = new Date().toLocaleDateString();
     const lastEntry = data[data.length - 1];
 
@@ -43,12 +44,14 @@ export const Dashboard: React.FC = () => {
         ]);
       }
     }
-  }, [count, data]); 
+  }, [count]);
+
+  console.log("Chart Data: ", data); // Log the data passed to the chart
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto space-y-8">
-       
+        {/* User Profile */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           {userData ? (
             <>
@@ -61,7 +64,7 @@ export const Dashboard: React.FC = () => {
           )}
         </div>
 
-       
+        {/* Counter Trends Chart */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">Counter Trends</h2>
 
